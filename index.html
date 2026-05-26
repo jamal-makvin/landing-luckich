@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Luckybir Rewards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #07090d;
+            --bg-panel: #111722;
+            --bg-panel-soft: #171f2c;
+            --line: rgba(255, 255, 255, 0.1);
+            --line-strong: rgba(255, 255, 255, 0.18);
+            --text-main: #ffffff;
+            --text-muted: #a9b3c4;
+            --green: #4df42d;
+            --green-dark: #179a35;
+            --red: #ff3f55;
+            --gold: #ffd15c;
+            --blue: #4aa3ff;
+            --shadow-green: rgba(77, 244, 45, 0.34);
+            --shadow-red: rgba(255, 63, 85, 0.28);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            background:
+                radial-gradient(circle at 18% 0%, rgba(77, 244, 45, 0.11), transparent 28rem),
+                radial-gradient(circle at 90% 20%, rgba(74, 163, 255, 0.12), transparent 24rem),
+                linear-gradient(180deg, #080b11 0%, var(--bg-main) 44%, #050609 100%);
+            color: var(--text-main);
+            font-family: "Inter", Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        a {
+            touch-action: manipulation;
+        }
+
+        .site-shell {
+            min-height: 100vh;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.94);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: min(100%, 1040px);
+            min-height: 70px;
+            margin: 0 auto;
+            padding: 10px 18px;
+        }
+
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            min-width: 0;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: min(260px, 56vw);
+            height: 48px;
+            object-fit: contain;
+            object-position: left center;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 0 0 auto;
+        }
+
+        .social-link {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            text-decoration: none;
+            transition: transform 180ms ease, filter 180ms ease, border-color 180ms ease;
+        }
+
+        .social-link:hover {
+            border-color: rgba(255, 255, 255, 0.28);
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        .social-link:active {
+            transform: scale(0.96);
+        }
+
+        .social-link svg {
+            display: block;
+            width: 36px;
+            height: 36px;
+        }
+
+        .ticker-section {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            background: linear-gradient(90deg, #050609 0%, #0e1514 50%, #050609 100%);
+            border-bottom: 1px solid rgba(77, 244, 45, 0.42);
+            box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+        }
+
+        .ticker-section::before,
+        .ticker-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            width: 56px;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .ticker-section::before {
+            left: 0;
+            background: linear-gradient(90deg, #050609, transparent);
+        }
+
+        .ticker-section::after {
+            right: 0;
+            background: linear-gradient(270deg, #050609, transparent);
+        }
+
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            padding: 12px 0;
+            animation: ticker-scroll 72s linear infinite;
+            will-change: transform;
+        }
+
+        .ticker-group {
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+
+        .winner-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 8px;
+            padding: 8px 13px;
+            border: 1px solid rgba(77, 244, 45, 0.2);
+            border-radius: 999px;
+            background: rgba(77, 244, 45, 0.08);
+            color: #dfffd8;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .winner-id {
+            color: #ffffff;
+        }
+
+        .winner-amount {
+            color: var(--green);
+        }
+
+        .app-container {
+            width: min(100%, 680px);
+            margin: 0 auto;
+            padding: 20px 16px 54px;
+        }
+
+        .hero-panel {
+            display: grid;
+            gap: 16px;
+        }
+
+        .offer-card {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+            gap: 16px;
+            align-items: stretch;
+            padding: 12px;
+            border: 1px solid rgba(74, 163, 255, 0.26);
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(20, 29, 45, 0.96), rgba(10, 12, 18, 0.98));
+            box-shadow: 0 22px 58px rgba(0, 0, 0, 0.36);
+        }
+
+        .offer-link {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            border-radius: inherit;
+        }
+
+        .offer-card:hover .offer-img {
+            transform: scale(1.025);
+        }
+
+        .offer-media {
+            position: relative;
+            overflow: hidden;
+            min-height: 210px;
+            border-radius: 14px;
+            background: #030713;
+        }
+
+        .offer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 220ms ease;
+        }
+
+        .offer-body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+            padding: 2px 0;
+        }
+
+        .offer-title {
+            margin: 0 0 13px;
+            color: #ffffff;
+            font-size: 19px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .offer-bonuses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin-bottom: 10px;
+        }
+
+        .offer-bonus {
+            min-height: 70px;
+            padding: 12px 10px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #ffd327, #ffbd00);
+            color: #05070a;
+            text-align: center;
+        }
+
+        .offer-bonus strong {
+            display: block;
+            font-size: 24px;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .offer-bonus span {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            line-height: 1.15;
+            font-weight: 800;
+        }
+
+        .promo-code-box {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 12px;
+            min-height: 64px;
+            padding: 10px 13px;
+            border: 1px dashed rgba(255, 255, 255, 0.26);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .promo-code-label {
+            display: block;
+            margin-bottom: 2px;
+            color: rgba(255, 255, 255, 0.52);
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .promo-code-value {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+        }
+
+        .copy-code-btn {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #dce6f6;
+            cursor: pointer;
+            transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+        }
+
+        .copy-code-btn:hover {
+            background: rgba(77, 244, 45, 0.16);
+            color: var(--green);
+        }
+
+        .copy-code-btn:active {
+            transform: scale(0.94);
+        }
+
+        .copy-code-btn.is-copied {
+            background: rgba(77, 244, 45, 0.2);
+            color: var(--green);
+        }
+
+        .copy-code-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .offer-license {
+            margin: 12px 0 0;
+            color: rgba(255, 255, 255, 0.34);
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .info-card,
+        .promo-banner,
+        .help-panel {
+            border: 1px solid var(--line);
+            background: rgba(17, 23, 34, 0.86);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+        }
+
+        .btn-bonus:hover {
+            filter: brightness(1.08);
+        }
+
+        .btn-bonus:active,
+        .help-trigger:active {
+            transform: scale(0.98);
+        }
+
+        .btn-bonus::after {
+            content: "";
+            position: absolute;
+            top: -55%;
+            left: -70%;
+            width: 34%;
+            height: 210%;
+            background: rgba(255, 255, 255, 0.44);
+            transform: rotate(28deg);
+            animation: sheen 3.2s infinite;
+        }
+
+        .promo-banner {
+            position: relative;
+            overflow: hidden;
+            border-color: rgba(77, 244, 45, 0.48);
+            border-radius: 20px;
+            padding: 22px 16px;
+            text-align: center;
+            background:
+                linear-gradient(145deg, rgba(77, 244, 45, 0.16), transparent 45%),
+                linear-gradient(180deg, rgba(17, 23, 34, 0.96), rgba(8, 12, 18, 0.98));
+            box-shadow: 0 0 0 1px rgba(77, 244, 45, 0.1), 0 22px 54px rgba(0, 0, 0, 0.34);
+        }
+
+        .promo-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(90deg, transparent, rgba(77, 244, 45, 0.14), transparent);
+            opacity: 0.85;
+            animation: panel-glow 4s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .promo-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .promo-label {
+            margin-bottom: 8px;
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .promo-amount {
+            margin: 0;
+            color: var(--green);
+            font-size: clamp(34px, 9vw, 46px);
+            line-height: 1;
+            font-weight: 900;
+            text-shadow: 0 0 24px rgba(77, 244, 45, 0.42);
+        }
+
+        .promo-sub {
+            display: block;
+            margin: 9px 0 14px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .timer-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 15px;
+            padding: 7px 13px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.28);
+            color: #d8e1ef;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .timer-val {
+            color: var(--red);
+        }
+
+        .btn-bonus {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #72ff4f 0%, #32ca4e 100%);
+            color: #071006;
+            font-size: 15px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 14px 28px rgba(77, 244, 45, 0.28);
+            transition: transform 180ms ease, filter 180ms ease;
+            animation: claim-pulse 2.1s infinite ease-in-out;
+        }
+
+        .info-card {
+            overflow: hidden;
+            border-radius: 18px;
+            padding: 16px;
+        }
+
+        .info-card.blue {
+            border-color: rgba(74, 163, 255, 0.48);
+        }
+
+        .info-card.gold {
+            border-color: rgba(255, 209, 92, 0.5);
+        }
+
+        .info-title {
+            margin-bottom: 12px;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .info-title.blue {
+            color: var(--blue);
+        }
+
+        .info-title.gold {
+            color: var(--gold);
+        }
+
+        .info-img {
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+
+        .help-panel {
+            overflow: hidden;
+            border-radius: 18px;
+            background: rgba(17, 23, 34, 0.9);
+        }
+
+        .help-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: 100%;
+            min-height: 58px;
+            padding: 0 16px;
+            border: 0;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 900;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        .help-icon {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(74, 163, 255, 0.16);
+            color: var(--blue);
+            flex: 0 0 auto;
+            transition: transform 180ms ease;
+        }
+
+        .help-trigger[aria-expanded="true"] .help-icon {
+            transform: rotate(180deg);
+        }
+
+        .help-content {
+            display: none;
+            padding: 0 16px 16px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .help-content.is-open {
+            display: block;
+        }
+
+        .help-list {
+            margin: 0;
+            padding-left: 19px;
+        }
+
+        .help-list li + li {
+            margin-top: 6px;
+        }
+
+        #tt-shield {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 22px;
+            background:
+                radial-gradient(circle at 50% 8%, rgba(74, 163, 255, 0.12), transparent 20rem),
+                var(--bg-main);
+        }
+
+        .perfect-arrow {
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            width: 78px;
+            height: 78px;
+            color: var(--gold);
+            animation: arrow-bounce 0.86s infinite alternate ease-in-out;
+        }
+
+        .perfect-arrow svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            filter: drop-shadow(0 0 15px rgba(255, 209, 92, 0.85));
+        }
+
+        .shield-modal {
+            width: min(100%, 370px);
+            padding: 28px 18px;
+            border: 1px solid rgba(74, 163, 255, 0.45);
+            border-radius: 24px;
+            background: rgba(17, 23, 34, 0.96);
+            text-align: center;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+        }
+
+        .shield-mark {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--gold);
+            font-size: 42px;
+            font-weight: 900;
+        }
+
+        .shield-title {
+            margin: 0 0 10px;
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .shield-text {
+            margin: 0 0 18px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .shield-step {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.045);
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .step-num {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: #fff;
+            flex: 0 0 auto;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        @keyframes ticker-scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes sheen {
+            0% {
+                left: -70%;
+            }
+
+            18% {
+                left: 125%;
+            }
+
+            100% {
+                left: 125%;
+            }
+        }
+
+        @keyframes claim-pulse {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 14px 28px rgba(77, 244, 45, 0.24);
+            }
+
+            50% {
+                transform: scale(1.025);
+                box-shadow: 0 18px 34px rgba(77, 244, 45, 0.36);
+            }
+        }
+
+        @keyframes panel-glow {
+            0%,
+            100% {
+                transform: translateX(-80%);
+            }
+
+            50% {
+                transform: translateX(80%);
+            }
+        }
+
+        @keyframes arrow-bounce {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(12px, -16px);
+            }
+        }
+
+        @media (max-width: 620px) {
+            .offer-card {
+                grid-template-columns: 1fr;
+                gap: 13px;
+                padding: 11px;
+            }
+
+            .offer-media {
+                min-height: 0;
+                aspect-ratio: 1 / 1;
+            }
+
+            .offer-body {
+                padding: 0;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .header-inner {
+                min-height: 62px;
+                padding-inline: 12px;
+            }
+
+            .brand-logo {
+                width: min(210px, 58vw);
+                height: 40px;
+            }
+
+            .social-links {
+                gap: 9px;
+            }
+
+            .social-link {
+                width: 40px;
+                height: 40px;
+            }
+
+            .social-link svg {
+                width: 30px;
+                height: 30px;
+            }
+
+            .app-container {
+                padding: 16px 12px 42px;
+            }
+
+            .offer-title {
+                margin-bottom: 13px;
+                font-size: 16px;
+            }
+
+            .offer-bonuses {
+                gap: 8px;
+            }
+
+            .offer-bonus {
+                min-height: 64px;
+                padding: 11px 8px;
+            }
+
+            .offer-bonus strong {
+                font-size: 21px;
+            }
+
+            .promo-code-value {
+                font-size: 18px;
+            }
+
+            .winner-node {
+                margin-inline: 5px;
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+
+            .promo-banner {
+                padding: 20px 13px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-shell" id="wrapper-site">
+        <header class="site-header" aria-label="Шапка сайта">
+            <div class="header-inner">
+                <a class="brand-link" href="#" aria-label="MAKVIN affiliate">
+                    <img class="brand-logo" src="makvin-affiliate-logo.jpg" alt="MAKVIN affiliate">
+                </a>
+                <nav class="social-links" aria-label="Социальные сети">
+                    <a class="social-link" href="https://www.youtube.com/@actualnaya_burmalda" aria-label="YouTube">
+                        <svg viewBox="0 0 48 48" aria-hidden="true">
+                            <circle cx="24" cy="24" r="24" fill="#fff"/>
+                            <path d="M36.7 18.4c-.3-1.2-1.3-2.1-2.5-2.4C32 15.4 24 15.4 24 15.4s-8 0-10.2.6c-1.2.3-2.2 1.2-2.5 2.4-.6 2.2-.6 5.6-.6 5.6s0 3.4.6 5.6c.3 1.2 1.3 2.1 2.5 2.4 2.2.6 10.2.6 10.2.6s8 0 10.2-.6c1.2-.3 2.2-1.2 2.5-2.4.6-2.2.6-5.6.6-5.6s0-3.4-.6-5.6Z" fill="#ff0000"/>
+                            <path d="M21.3 28.1v-8.2l7.1 4.1-7.1 4.1Z" fill="#fff"/>
+                        </svg>
+                    </a>
+                    <a class="social-link" href="https://t.me/+boF6vrQLIGI1ZTFi" aria-label="Telegram">
+                        <svg viewBox="0 0 48 48" aria-hidden="true">
+                            <circle cx="24" cy="24" r="24" fill="#35aee2"/>
+                            <path d="M34.7 14.8 12.4 23.4c-1.5.6-1.5 1.5-.3 1.9l5.7 1.8 2.2 6.8c.3.9.8 1.1 1.5.5l3.2-3.1 5.9 4.3c1.1.6 1.8.3 2.1-1l3.8-18c.4-1.5-.6-2.2-1.8-1.8Zm-15.9 11.9 13-8.2c.6-.4 1.2-.2.7.3L21.8 28.5l-.4 4.2-2.6-6Z" fill="#fff"/>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <section class="ticker-section" aria-label="Лента выигрышей">
+            <div class="ticker-track">
+                <div class="ticker-group">
+                    <div class="winner-node"><span class="winner-id">ID: 483***</span> выиграл <span class="winner-amount">7 682 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 726***</span> выиграл <span class="winner-amount">12 439 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 154***</span> выиграл <span class="winner-amount">9 174 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 891***</span> выиграл <span class="winner-amount">14 087 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 367***</span> выиграл <span class="winner-amount">8 536 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 512***</span> выиграл <span class="winner-amount">10 000 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 748***</span> выиграл <span class="winner-amount">13 271 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 294***</span> выиграл <span class="winner-amount">7 948 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 635***</span> выиграл <span class="winner-amount">11 563 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 879***</span> выиграл <span class="winner-amount">14 822 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 421***</span> выиграл <span class="winner-amount">8 091 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 563***</span> выиграл <span class="winner-amount">12 006 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 742***</span> выиграл <span class="winner-amount">9 735 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 918***</span> выиграл <span class="winner-amount">13 904 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 356***</span> выиграл <span class="winner-amount">7 311 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 684***</span> выиграл <span class="winner-amount">10 842 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 937***</span> выиграл <span class="winner-amount">15 000 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 245***</span> выиграл <span class="winner-amount">8 774 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 771***</span> выиграл <span class="winner-amount">11 229 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 498***</span> выиграл <span class="winner-amount">14 316 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 623***</span> выиграл <span class="winner-amount">9 486 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 852***</span> выиграл <span class="winner-amount">12 718 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 314***</span> выиграл <span class="winner-amount">7 905 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 567***</span> выиграл <span class="winner-amount">13 147 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 729***</span> выиграл <span class="winner-amount">10 394 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 481***</span> выиграл <span class="winner-amount">8 219 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 693***</span> выиграл <span class="winner-amount">11 876 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 845***</span> выиграл <span class="winner-amount">14 659 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 258***</span> выиграл <span class="winner-amount">9 028 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 974***</span> выиграл <span class="winner-amount">12 995 ₽</span></div>
+                </div>
+                <div class="ticker-group" aria-hidden="true">
+                    <div class="winner-node"><span class="winner-id">ID: 483***</span> выиграл <span class="winner-amount">7 682 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 726***</span> выиграл <span class="winner-amount">12 439 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 154***</span> выиграл <span class="winner-amount">9 174 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 891***</span> выиграл <span class="winner-amount">14 087 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 367***</span> выиграл <span class="winner-amount">8 536 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 512***</span> выиграл <span class="winner-amount">10 000 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 748***</span> выиграл <span class="winner-amount">13 271 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 294***</span> выиграл <span class="winner-amount">7 948 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 635***</span> выиграл <span class="winner-amount">11 563 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 879***</span> выиграл <span class="winner-amount">14 822 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 421***</span> выиграл <span class="winner-amount">8 091 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 563***</span> выиграл <span class="winner-amount">12 006 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 742***</span> выиграл <span class="winner-amount">9 735 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 918***</span> выиграл <span class="winner-amount">13 904 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 356***</span> выиграл <span class="winner-amount">7 311 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 684***</span> выиграл <span class="winner-amount">10 842 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 937***</span> выиграл <span class="winner-amount">15 000 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 245***</span> выиграл <span class="winner-amount">8 774 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 771***</span> выиграл <span class="winner-amount">11 229 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 498***</span> выиграл <span class="winner-amount">14 316 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 623***</span> выиграл <span class="winner-amount">9 486 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 852***</span> выиграл <span class="winner-amount">12 718 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 314***</span> выиграл <span class="winner-amount">7 905 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 567***</span> выиграл <span class="winner-amount">13 147 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 729***</span> выиграл <span class="winner-amount">10 394 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 481***</span> выиграл <span class="winner-amount">8 219 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 693***</span> выиграл <span class="winner-amount">11 876 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 845***</span> выиграл <span class="winner-amount">14 659 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 258***</span> выиграл <span class="winner-amount">9 028 ₽</span></div>
+                    <div class="winner-node"><span class="winner-id">ID: 974***</span> выиграл <span class="winner-amount">12 995 ₽</span></div>
+                </div>
+            </div>
+        </section>
+
+        <main class="app-container">
+            <div class="hero-panel">
+                <section class="offer-card" aria-label="Оффер с промокодом">
+                    <a class="offer-link" href="https://supegame777.pro/69sDf6" aria-label="Перейти к офферу" onclick="trackBtn('click_offer_banner')"></a>
+                    <div class="offer-media">
+                        <img src="lucky-bear-offer.png" class="offer-img" alt="Lucky Bear">
+                    </div>
+                    <div class="offer-body">
+                        <h2 class="offer-title">Получай бонусы и фриспины в случайные акционные слоты, включая Gates of Universe, The Dog House, Cleocatra, Gates of Olympus, Gates of Olympus 1000, Sugar Rush 1000 и другие популярные игры и их провайдеры.</h2>
+                        <div class="offer-bonuses" aria-label="Бонусы">
+                            <div class="offer-bonus">
+                                <strong>250FS</strong>
+                                <span>Фриспины по промокоду</span>
+                            </div>
+                            <div class="offer-bonus">
+                                <strong>до +360%</strong>
+                                <span>Бонус пополнения</span>
+                            </div>
+                        </div>
+                        <div class="promo-code-box">
+                            <div>
+                                <span class="promo-code-label">Твой промокод</span>
+                                <span class="promo-code-value" id="promo-code">MAKVIN</span>
+                            </div>
+                            <button class="copy-code-btn" type="button" id="copy-promo" aria-label="Скопировать промокод" title="Скопировать промокод">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M8 8.5a2.5 2.5 0 0 1 2.5-2.5h6A2.5 2.5 0 0 1 19 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-6A2.5 2.5 0 0 1 8 16.5v-8Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M5 15.5v-8A2.5 2.5 0 0 1 7.5 5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="offer-license">LICENSE: RN 040509</p>
+                    </div>
+                </section>
+
+                <section class="promo-banner" aria-label="Бонусное предложение">
+                    <div class="promo-content">
+                        <div class="promo-label">Лимитированное предложение</div>
+                        <h1 class="promo-amount">10 000 ₽</h1>
+                        <span class="promo-sub">Действует на первый депозит</span>
+                        <div class="timer-wrap">Истекает через: <span class="timer-val" id="timer">19:59</span></div>
+                        <a href="https://supegame777.pro/69sDf6" class="btn-bonus" onclick="trackBtn('click_main_bonus')">Забрать бонус</a>
+                    </div>
+                </section>
+
+                <section class="info-card blue">
+                    <div class="info-title blue">Мгновенная регистрация</div>
+                    <img src="reg-promo.png" class="info-img" alt="Промо регистрации">
+                </section>
+
+                <section class="info-card gold">
+                    <div class="info-title gold">Постоянный бонус на депозит ⚡</div>
+                    <img src="bonus-promo.png" class="info-img" alt="Промо бонуса">
+                </section>
+
+                <section class="help-panel">
+                    <button class="help-trigger" type="button" aria-expanded="false" aria-controls="hp" id="help-toggle">
+                        Как начать играть?
+                        <span class="help-icon" aria-hidden="true">⌄</span>
+                    </button>
+                    <div class="help-content" id="hp">
+                        <ol class="help-list">
+                            <li>Получите промокод и нажмите на баннер.</li>
+                            <li>Пройдите быструю регистрацию.</li>
+                            <li>Ваш бонус будет начислен сразу после активации.</li>
+                        </ol>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div id="tt-shield">
+        <div class="perfect-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 3L21 11M21 3L13 3M21 3L10 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="shield-modal">
+            <span class="shield-mark">!</span>
+            <h2 class="shield-title">Открыть в браузере</h2>
+            <p class="shield-text">Для корректной работы игры выполните действия ниже:</p>
+            <div class="shield-step"><div class="step-num">1</div><span>Нажмите на <b>три точки (...)</b> в углу</span></div>
+            <div class="shield-step"><div class="step-num">2</div><span>Выберите <b>«Открыть в браузере»</b></span></div>
+            <div class="shield-step"><div class="step-num">3</div><span>Забирайте свой бонус и играйте</span></div>
+        </div>
+    </div>
+
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+        window.va = window.va || function () {
+            (window.vaq = window.vaq || []).push(arguments);
+        };
+
+        function trackBtn(name) {
+            if (window.va) {
+                window.va("event", { name: name });
+            }
+        }
+    </script>
+
+    <script>
+        function isTikTok() {
+            return /TikTok|musical_ly|BytedanceWebview/i.test(navigator.userAgent);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const wrapper = document.getElementById("wrapper-site");
+            const shield = document.getElementById("tt-shield");
+
+            if (isTikTok()) {
+                wrapper.style.display = "none";
+                shield.style.display = "flex";
+                return;
+            }
+
+            const helpToggle = document.getElementById("help-toggle");
+            const helpContent = document.getElementById("hp");
+
+            helpToggle.addEventListener("click", () => {
+                const isOpen = helpToggle.getAttribute("aria-expanded") === "true";
+                helpToggle.setAttribute("aria-expanded", String(!isOpen));
+                helpContent.classList.toggle("is-open", !isOpen);
+            });
+
+            const copyPromoButton = document.getElementById("copy-promo");
+            const promoCode = document.getElementById("promo-code");
+
+            copyPromoButton.addEventListener("click", async () => {
+                const code = promoCode.textContent.trim();
+
+                try {
+                    await navigator.clipboard.writeText(code);
+                } catch (error) {
+                    const fallbackInput = document.createElement("textarea");
+                    fallbackInput.value = code;
+                    fallbackInput.setAttribute("readonly", "");
+                    fallbackInput.style.position = "fixed";
+                    fallbackInput.style.opacity = "0";
+                    document.body.appendChild(fallbackInput);
+                    fallbackInput.select();
+                    document.execCommand("copy");
+                    fallbackInput.remove();
+                }
+
+                copyPromoButton.classList.add("is-copied");
+                copyPromoButton.setAttribute("title", "Промокод скопирован");
+                setTimeout(() => {
+                    copyPromoButton.classList.remove("is-copied");
+                    copyPromoButton.setAttribute("title", "Скопировать промокод");
+                }, 1400);
+            });
+
+            let timeLeft = 1199;
+            setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                const timerEl = document.getElementById("timer");
+
+                if (timerEl) {
+                    timerEl.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                }
+
+                if (timeLeft > 0) {
+                    timeLeft -= 1;
+                }
+            }, 1000);
+
+        });
+    </script>
+</body>
+</html>
