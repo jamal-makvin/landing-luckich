@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Luckybir Rewards</title>
+    <title>Registration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -132,75 +132,6 @@
             display: block;
             width: 36px;
             height: 36px;
-        }
-
-        .ticker-section {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            overflow: hidden;
-            width: 100%;
-            background: linear-gradient(90deg, #050609 0%, #0e1514 50%, #050609 100%);
-            border-bottom: 1px solid rgba(77, 244, 45, 0.42);
-            box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
-        }
-
-        .ticker-section::before,
-        .ticker-section::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            z-index: 2;
-            width: 56px;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .ticker-section::before {
-            left: 0;
-            background: linear-gradient(90deg, #050609, transparent);
-        }
-
-        .ticker-section::after {
-            right: 0;
-            background: linear-gradient(270deg, #050609, transparent);
-        }
-
-        .ticker-track {
-            display: flex;
-            width: max-content;
-            padding: 12px 0;
-            animation: ticker-scroll 72s linear infinite;
-            will-change: transform;
-        }
-
-        .ticker-group {
-            display: flex;
-            align-items: center;
-            flex: 0 0 auto;
-            white-space: nowrap;
-        }
-
-        .winner-node {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin: 0 8px;
-            padding: 8px 13px;
-            border: 1px solid rgba(77, 244, 45, 0.2);
-            border-radius: 999px;
-            background: rgba(77, 244, 45, 0.08);
-            color: #dfffd8;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .winner-id {
-            color: #ffffff;
-        }
-
-        .winner-amount {
-            color: var(--green);
         }
 
         .app-container {
@@ -428,6 +359,35 @@
             z-index: 1;
         }
 
+        .registration-banner .promo-label {
+            max-width: 440px;
+            margin-inline: auto;
+            color: #ffffff;
+            font-size: clamp(16px, 3.8vw, 22px);
+            line-height: 1.18;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.44);
+        }
+
+        .registration-banner .promo-amount {
+            margin-top: 6px;
+            font-size: clamp(44px, 10vw, 62px);
+        }
+
+        .registration-banner .btn-bonus {
+            background: linear-gradient(90deg, #6eff3e 0%, #26df67 48%, #00c9ff 100%);
+            color: #041007;
+            box-shadow: 0 18px 38px rgba(77, 244, 45, 0.34), 0 0 28px rgba(0, 201, 255, 0.18);
+        }
+
+        .registration-banner .btn-bonus::before {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            pointer-events: none;
+        }
+
         .promo-label {
             margin-bottom: 8px;
             color: var(--gold);
@@ -478,13 +438,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 50px;
+            min-height: 56px;
             width: 100%;
             overflow: hidden;
             border-radius: 14px;
             background: linear-gradient(180deg, #72ff4f 0%, #32ca4e 100%);
             color: #071006;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 900;
             text-decoration: none;
             text-transform: uppercase;
@@ -528,6 +488,21 @@
             width: 100%;
             border-radius: 14px;
             border: 1px solid var(--line);
+        }
+
+        .info-link {
+            display: block;
+            border-radius: 14px;
+            text-decoration: none;
+        }
+
+        .info-link .info-img {
+            transition: transform 200ms ease, filter 200ms ease;
+        }
+
+        .info-link:hover .info-img {
+            filter: brightness(1.08);
+            transform: scale(1.01);
         }
 
         .help-panel {
@@ -590,6 +565,15 @@
 
         .help-list li + li {
             margin-top: 6px;
+        }
+
+        .site-footer {
+            margin-top: 22px;
+            padding: 8px 0 2px;
+            color: rgba(255, 255, 255, 0.42);
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
         }
 
         #tt-shield {
@@ -679,16 +663,6 @@
             flex: 0 0 auto;
             font-size: 12px;
             font-weight: 900;
-        }
-
-        @keyframes ticker-scroll {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
         }
 
         @keyframes sheen {
@@ -807,12 +781,6 @@
                 font-size: 18px;
             }
 
-            .winner-node {
-                margin-inline: 5px;
-                padding: 7px 10px;
-                font-size: 11px;
-            }
-
             .promo-banner {
                 padding: 20px 13px;
             }
@@ -854,75 +822,6 @@
             </div>
         </header>
 
-        <section class="ticker-section" aria-label="Лента выигрышей">
-            <div class="ticker-track">
-                <div class="ticker-group">
-                    <div class="winner-node"><span class="winner-id">ID: 483***</span> выиграл <span class="winner-amount">7 682 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 726***</span> выиграл <span class="winner-amount">12 439 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 154***</span> выиграл <span class="winner-amount">9 174 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 891***</span> выиграл <span class="winner-amount">14 087 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 367***</span> выиграл <span class="winner-amount">8 536 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 512***</span> выиграл <span class="winner-amount">10 000 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 748***</span> выиграл <span class="winner-amount">13 271 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 294***</span> выиграл <span class="winner-amount">7 948 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 635***</span> выиграл <span class="winner-amount">11 563 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 879***</span> выиграл <span class="winner-amount">14 822 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 421***</span> выиграл <span class="winner-amount">8 091 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 563***</span> выиграл <span class="winner-amount">12 006 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 742***</span> выиграл <span class="winner-amount">9 735 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 918***</span> выиграл <span class="winner-amount">13 904 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 356***</span> выиграл <span class="winner-amount">7 311 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 684***</span> выиграл <span class="winner-amount">10 842 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 937***</span> выиграл <span class="winner-amount">15 000 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 245***</span> выиграл <span class="winner-amount">8 774 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 771***</span> выиграл <span class="winner-amount">11 229 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 498***</span> выиграл <span class="winner-amount">14 316 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 623***</span> выиграл <span class="winner-amount">9 486 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 852***</span> выиграл <span class="winner-amount">12 718 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 314***</span> выиграл <span class="winner-amount">7 905 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 567***</span> выиграл <span class="winner-amount">13 147 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 729***</span> выиграл <span class="winner-amount">10 394 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 481***</span> выиграл <span class="winner-amount">8 219 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 693***</span> выиграл <span class="winner-amount">11 876 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 845***</span> выиграл <span class="winner-amount">14 659 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 258***</span> выиграл <span class="winner-amount">9 028 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 974***</span> выиграл <span class="winner-amount">12 995 ₽</span></div>
-                </div>
-                <div class="ticker-group" aria-hidden="true">
-                    <div class="winner-node"><span class="winner-id">ID: 483***</span> выиграл <span class="winner-amount">7 682 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 726***</span> выиграл <span class="winner-amount">12 439 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 154***</span> выиграл <span class="winner-amount">9 174 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 891***</span> выиграл <span class="winner-amount">14 087 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 367***</span> выиграл <span class="winner-amount">8 536 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 512***</span> выиграл <span class="winner-amount">10 000 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 748***</span> выиграл <span class="winner-amount">13 271 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 294***</span> выиграл <span class="winner-amount">7 948 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 635***</span> выиграл <span class="winner-amount">11 563 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 879***</span> выиграл <span class="winner-amount">14 822 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 421***</span> выиграл <span class="winner-amount">8 091 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 563***</span> выиграл <span class="winner-amount">12 006 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 742***</span> выиграл <span class="winner-amount">9 735 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 918***</span> выиграл <span class="winner-amount">13 904 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 356***</span> выиграл <span class="winner-amount">7 311 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 684***</span> выиграл <span class="winner-amount">10 842 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 937***</span> выиграл <span class="winner-amount">15 000 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 245***</span> выиграл <span class="winner-amount">8 774 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 771***</span> выиграл <span class="winner-amount">11 229 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 498***</span> выиграл <span class="winner-amount">14 316 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 623***</span> выиграл <span class="winner-amount">9 486 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 852***</span> выиграл <span class="winner-amount">12 718 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 314***</span> выиграл <span class="winner-amount">7 905 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 567***</span> выиграл <span class="winner-amount">13 147 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 729***</span> выиграл <span class="winner-amount">10 394 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 481***</span> выиграл <span class="winner-amount">8 219 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 693***</span> выиграл <span class="winner-amount">11 876 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 845***</span> выиграл <span class="winner-amount">14 659 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 258***</span> выиграл <span class="winner-amount">9 028 ₽</span></div>
-                    <div class="winner-node"><span class="winner-id">ID: 974***</span> выиграл <span class="winner-amount">12 995 ₽</span></div>
-                </div>
-            </div>
-        </section>
-
         <main class="app-container">
             <div class="hero-panel">
                 <section class="offer-card" aria-label="Оффер с промокодом">
@@ -958,19 +857,21 @@
                     </div>
                 </section>
 
-                <section class="promo-banner" aria-label="Бонусное предложение">
+                <section class="promo-banner registration-banner" aria-label="Регистрация для получения бонусов">
                     <div class="promo-content">
-                        <div class="promo-label">Лимитированное предложение</div>
-                        <h1 class="promo-amount">10 000 ₽</h1>
-                        <span class="promo-sub">Действует на первый депозит</span>
-                        <div class="timer-wrap">Истекает через: <span class="timer-val" id="timer">19:59</span></div>
-                        <a href="https://supegame777.pro/69sDf6" class="btn-bonus" onclick="trackBtn('click_main_bonus')">Забрать бонус</a>
+                        <div class="promo-label">Успей зарегистрироваться чтобы забрать бонусы</div>
+                        <h1 class="promo-amount">250FS &amp; +360%</h1>
+                        <span class="promo-sub">Предложение доступно только новым пользователям</span>
+                        <div class="timer-wrap">Актуально ещё: <span class="timer-val" id="timer">5д 00:00:00</span></div>
+                        <a href="https://supegame777.pro/69sDf6" class="btn-bonus" onclick="trackBtn('click_registration_bonus')">Зарегистрироваться</a>
                     </div>
                 </section>
 
                 <section class="info-card blue">
                     <div class="info-title blue">Мгновенная регистрация</div>
-                    <img src="reg-promo.png" class="info-img" alt="Промо регистрации">
+                    <a class="info-link" href="https://supegame777.pro/69sDf6" onclick="trackBtn('click_registration_card')" aria-label="Перейти к регистрации">
+                        <img src="reg-promo.png" class="info-img" alt="Промо регистрации">
+                    </a>
                 </section>
 
                 <section class="info-card gold">
@@ -991,6 +892,8 @@
                         </ol>
                     </div>
                 </section>
+
+                <footer class="site-footer">© 2026 STA Technology</footer>
             </div>
         </main>
     </div>
@@ -1074,20 +977,31 @@
                 }, 1400);
             });
 
-            let timeLeft = 1199;
-            setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                const timerEl = document.getElementById("timer");
+            const timerEl = document.getElementById("timer");
+            const timerStorageKey = "makvinRegistrationOfferEndsAt";
+            const fiveDays = 5 * 24 * 60 * 60 * 1000;
+            let offerEndsAt = Number(localStorage.getItem(timerStorageKey));
+
+            if (!offerEndsAt || offerEndsAt <= Date.now()) {
+                offerEndsAt = Date.now() + fiveDays;
+                localStorage.setItem(timerStorageKey, String(offerEndsAt));
+            }
+
+            const updateTimer = () => {
+                const timeLeft = Math.max(0, offerEndsAt - Date.now());
+                const totalSeconds = Math.floor(timeLeft / 1000);
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
 
                 if (timerEl) {
-                    timerEl.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                    timerEl.textContent = `${days}д ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
                 }
+            };
 
-                if (timeLeft > 0) {
-                    timeLeft -= 1;
-                }
-            }, 1000);
+            updateTimer();
+            setInterval(updateTimer, 1000);
 
         });
     </script>
