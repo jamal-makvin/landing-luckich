@@ -475,6 +475,12 @@
             display: none;
         }
 
+        .mobile-quick-cta.is-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(calc(100% + 24px));
+        }
+
         .mobile-quick-title,
         .mobile-quick-sub {
             margin: 0;
@@ -948,6 +954,7 @@
                 grid-template-columns: minmax(0, 1fr) auto;
                 align-items: center;
                 gap: 10px;
+                opacity: 1;
                 padding: 10px;
                 padding-bottom: calc(10px + env(safe-area-inset-bottom));
                 border: 1px solid rgba(77, 244, 45, 0.38);
@@ -955,6 +962,8 @@
                 background: rgba(6, 12, 16, 0.92);
                 box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), 0 0 24px rgba(77, 244, 45, 0.18);
                 backdrop-filter: blur(14px);
+                transform: translateY(0);
+                transition: opacity 180ms ease, transform 220ms ease;
             }
 
             .mobile-quick-title {
@@ -1265,6 +1274,9 @@
             const helpContent = document.getElementById("hp");
             const homePage = document.getElementById("home-page");
             const privacyPage = document.getElementById("privacy-page");
+            const mobileQuickCta = document.querySelector(".mobile-quick-cta");
+            const registrationBanner = document.querySelector(".registration-banner");
+            let registrationBannerVisible = false;
 
             helpToggle.addEventListener("click", () => {
                 const isOpen = helpToggle.getAttribute("aria-expanded") === "true";
@@ -1276,12 +1288,22 @@
                 homePage.style.display = "none";
                 privacyPage.classList.add("is-open");
                 window.scrollTo({ top: 0, behavior: "smooth" });
+                syncMobileQuickCta();
             };
 
             const showHomePage = () => {
                 privacyPage.classList.remove("is-open");
                 homePage.style.display = "";
                 window.scrollTo({ top: 0, behavior: "smooth" });
+                syncMobileQuickCta();
+            };
+
+            const syncMobileQuickCta = () => {
+                if (!mobileQuickCta) return;
+
+                const isMobile = window.matchMedia("(max-width: 620px)").matches;
+                const isPrivacyOpen = window.location.hash === "#privacy-policy";
+                mobileQuickCta.classList.toggle("is-hidden", !isMobile || isPrivacyOpen || registrationBannerVisible);
             };
 
             const syncPageFromHash = () => {
@@ -1294,6 +1316,19 @@
 
             window.addEventListener("hashchange", syncPageFromHash);
             syncPageFromHash();
+
+            if (mobileQuickCta && registrationBanner) {
+                const checkRegistrationPosition = () => {
+                    const rect = registrationBanner.getBoundingClientRect();
+                    registrationBannerVisible = rect.top < window.innerHeight * 0.82;
+                    syncMobileQuickCta();
+                };
+
+                window.addEventListener("scroll", checkRegistrationPosition, { passive: true });
+                window.addEventListener("resize", checkRegistrationPosition);
+                window.addEventListener("resize", syncMobileQuickCta);
+                checkRegistrationPosition();
+            }
 
             const copyPromoButton = document.getElementById("copy-promo");
             const promoCode = document.getElementById("promo-code");
