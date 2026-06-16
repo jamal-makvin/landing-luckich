@@ -159,11 +159,10 @@
         }
 
         .offer-image-link {
-            position: absolute;
-            inset: 0 auto 0 0;
-            z-index: 1;
-            width: 190px;
-            border-radius: 16px 0 0 16px;
+            display: block;
+            border-radius: 14px;
+            overflow: hidden;
+            text-decoration: none;
         }
 
         .offer-card:hover .offer-img {
@@ -172,7 +171,6 @@
 
         .offer-media {
             position: relative;
-            z-index: 2;
             overflow: hidden;
             min-height: 210px;
             border-radius: 14px;
@@ -471,6 +469,45 @@
             box-shadow: 0 14px 28px rgba(77, 244, 45, 0.28);
             transition: transform 180ms ease, filter 180ms ease;
             animation: claim-pulse 2.1s infinite ease-in-out;
+        }
+
+        .mobile-quick-cta {
+            display: none;
+        }
+
+        .mobile-quick-title,
+        .mobile-quick-sub {
+            margin: 0;
+        }
+
+        .mobile-quick-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 0 16px;
+            overflow: hidden;
+            border-radius: 13px;
+            background: linear-gradient(90deg, #6eff3e 0%, #23df66 48%, #00c9ff 100%);
+            color: #041007;
+            font-size: 13px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 12px 28px rgba(77, 244, 45, 0.3), 0 0 22px rgba(0, 201, 255, 0.2);
+        }
+
+        .mobile-quick-btn::after {
+            content: "";
+            position: absolute;
+            top: -60%;
+            left: -70%;
+            width: 34%;
+            height: 220%;
+            background: rgba(255, 255, 255, 0.42);
+            transform: rotate(28deg);
+            animation: sheen 3.2s infinite;
         }
 
         .info-card {
@@ -897,6 +934,44 @@
         }
 
         @media (max-width: 620px) {
+            .app-container {
+                padding-bottom: 120px;
+            }
+
+            .mobile-quick-cta {
+                position: fixed;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                z-index: 80;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+                padding-bottom: calc(10px + env(safe-area-inset-bottom));
+                border: 1px solid rgba(77, 244, 45, 0.38);
+                border-radius: 18px;
+                background: rgba(6, 12, 16, 0.92);
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), 0 0 24px rgba(77, 244, 45, 0.18);
+                backdrop-filter: blur(14px);
+            }
+
+            .mobile-quick-title {
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 900;
+                line-height: 1.1;
+            }
+
+            .mobile-quick-sub {
+                margin-top: 3px;
+                color: rgba(255, 255, 255, 0.66);
+                font-size: 11px;
+                font-weight: 800;
+                line-height: 1.2;
+            }
+
             .offer-card {
                 grid-template-columns: 1fr;
                 gap: 13px;
@@ -904,9 +979,6 @@
             }
 
             .offer-image-link {
-                inset: 11px 11px auto 11px;
-                width: auto;
-                height: 360px;
                 border-radius: 14px;
             }
 
@@ -957,10 +1029,6 @@
             .offer-media {
                 height: 320px;
                 min-height: 300px;
-            }
-
-            .offer-image-link {
-                height: 320px;
             }
 
             .offer-bonuses {
@@ -1015,12 +1083,20 @@
         </header>
 
         <main class="app-container" id="home-page">
+            <div class="mobile-quick-cta" aria-label="Быстрая регистрация">
+                <div>
+                    <p class="mobile-quick-title">MAKWIN +360%</p>
+                    <p class="mobile-quick-sub">Промокод готов к активации</p>
+                </div>
+                <a class="mobile-quick-btn" href="https://playgame777.fit/4Zhqmm" onclick="trackBtn('click_mobile_quick_registration')">Регистрация</a>
+            </div>
             <div class="hero-panel">
                 <section class="offer-card" aria-label="Оффер с промокодом">
-                    <a class="offer-image-link" href="https://playgame777.fit/4Zhqmm" aria-label="Перейти к офферу" onclick="trackBtn('click_offer_banner')"></a>
-                    <div class="offer-media">
-                        <img src="lucky-bear-offer.png" class="offer-img" alt="Lucky Bear" width="1024" height="1536">
-                    </div>
+                    <a class="offer-image-link" href="https://playgame777.fit/4Zhqmm" aria-label="Перейти к офферу" onclick="trackBtn('click_offer_banner')">
+                        <div class="offer-media">
+                            <img src="lucky-bear-offer.png" class="offer-img" alt="Lucky Bear" width="1024" height="1536">
+                        </div>
+                    </a>
                     <div class="offer-body">
                         <p class="offer-kicker">Эксклюзивный доступ</p>
                         <h2 class="offer-title">Активируй промокод MAKWIN и забери персональные бонусы для новых участников.</h2>
@@ -1091,7 +1167,7 @@
 
                 <footer class="site-footer">
                     © 2026 STA Technology
-                    <p class="footer-note">Официальный партнёрский проект. Лицензионная информация защищена: RN 071241. Материалы размещены в рамках заявленных лицензионных требований; пользователю необходимо соблюдать законодательство своей юрисдикции.</p>
+                    <p class="footer-note">makwin.space — информационный справочник о доступе к MAKWIN. Лицензионная информация: RN 071241. Материалы размещены в ознакомительных целях; пользователю необходимо соблюдать законодательство своей юрисдикции.</p>
                     <p class="responsible-note">18+. Азартные игры могут вызывать зависимость. Играйте ответственно. Материалы не являются предложением играть и не гарантируют выигрыш.</p>
                     <div class="footer-links">
                         <a class="footer-link" href="#privacy-policy" id="open-privacy">Политика конфиденциальности</a>
