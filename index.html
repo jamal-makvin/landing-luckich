@@ -185,6 +185,12 @@
             transition: transform 220ms ease;
         }
 
+        .offer-media picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
         .offer-body {
             position: relative;
             display: flex;
@@ -996,12 +1002,6 @@
                 min-height: 320px;
             }
 
-            .offer-img {
-                object-fit: contain;
-                padding: 12px;
-                background: #030713;
-            }
-
             .offer-body {
                 padding: 0;
             }
@@ -1044,10 +1044,6 @@
             .offer-media {
                 height: 320px;
                 min-height: 300px;
-            }
-
-            .offer-img {
-                padding: 10px;
             }
 
             .offer-bonuses {
@@ -1113,7 +1109,10 @@
                 <section class="offer-card" aria-label="Оффер с промокодом">
                     <a class="offer-image-link" href="https://playgame777.fit/4Zhqmm" aria-label="Перейти к офферу" onclick="trackBtn('click_offer_banner')">
                         <div class="offer-media">
-                            <img src="lucky-bear-offer.png" class="offer-img" alt="Lucky Bear" width="1024" height="1536">
+                            <picture>
+                                <source srcset="lucky-bear-offer-mobile.png" media="(max-width: 620px)">
+                                <img src="lucky-bear-offer.png" class="offer-img" alt="Lucky Bear" width="1024" height="1536">
+                            </picture>
                         </div>
                     </a>
                     <div class="offer-body">
